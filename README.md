@@ -1,7 +1,7 @@
-#CS410 Assignment 3
+# CS410 Assignment 3
 
 
-###Code Smell Refactoring:
+### Code Smell Refactoring:
 - Changed the variables to private instead of public
 - Changed variable names at the beginning of class to make it more readable
 - Line 145: Removed undo feature since it is not in the design specs.
