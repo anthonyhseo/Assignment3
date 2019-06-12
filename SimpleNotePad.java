@@ -11,7 +11,11 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -121,26 +125,23 @@ public class SimpleNotePad extends JFrame implements ActionListener{
     	recentFile[0] = file;
     	for (int i = 0; i < 5; i++) {
     		if (recentFile[i] == null) break;
-    		recent[i] = new JMenuItem(recentFile[i].toString());
+    		recent[i] = new JMenuItem(recentFile[i].getName());
     		openRecentFile.add(recent[i]);
     		recent[i].addActionListener(this);
     		recent[i].setActionCommand("recent" + i);
     	}
     }
     
+    // file to string found here: https://howtodoinjava.com/java/io/java-read-file-to-string-examples/
     private void openFile(File fileToOpen) {
 		addFileToRecent(fileToOpen);
-		try {
-			StringBuilder sb = new StringBuilder();
-			Scanner openScanner = new Scanner(fileToOpen);
-			while (openScanner.hasNextLine()) {
-				sb.append(openScanner.nextLine());
-			}
-			d.setText(sb.toString());
-			openScanner.close();
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
+		StringBuilder sb = new StringBuilder();
+		try (Stream<String> stream = Files.lines(Paths.get(fileToOpen.toString()), StandardCharsets.UTF_8)) {
+            stream.forEach(s -> sb.append(s).append("\n"));
+            d.setText(sb.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     
