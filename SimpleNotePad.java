@@ -129,7 +129,6 @@ public class SimpleNotePad extends JFrame implements ActionListener{
     }
     
     private void openFile(File fileToOpen) {
-		System.out.println(fileToOpen.toString());
 		addFileToRecent(fileToOpen);
 		try {
 			StringBuilder sb = new StringBuilder();
@@ -137,7 +136,6 @@ public class SimpleNotePad extends JFrame implements ActionListener{
 			while (openScanner.hasNextLine()) {
 				sb.append(openScanner.nextLine());
 			}
-			System.out.println("string: " + sb.toString());
 			d.setText(sb.toString());
 			openScanner.close();
 		} catch (FileNotFoundException e1) {
