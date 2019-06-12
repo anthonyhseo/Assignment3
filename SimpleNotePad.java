@@ -7,14 +7,12 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Scanner;
 import java.util.stream.Stream;
 
 import javax.swing.JFileChooser;
@@ -25,8 +23,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
-import javax.swing.text.Position;
-import javax.swing.text.StyledDocument;
 
 /*
  * Code Smell Refactoring:
@@ -38,6 +34,7 @@ import javax.swing.text.StyledDocument;
  * -Removed the println in the paste block. 
  * -Moved some of the code from the if-else block in the actionPerformed method
  *  to separate methods to make it more readable.
+ * -Removed unused code from paste function
  * 
  * -Added new features in the assignment spec
  * 
@@ -195,7 +192,6 @@ public class SimpleNotePad extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
     	String actionCommand = e.getActionCommand();
         if (actionCommand.equals("open")) {
-        	File fileToOpen = null;
         	JFileChooser fileChooser = new JFileChooser();
         	int returnVal = fileChooser.showOpenDialog(null);
         	if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -220,8 +216,6 @@ public class SimpleNotePad extends JFrame implements ActionListener{
     	} else if (actionCommand.equals("copy")) {
             d.copy();
         } else if (actionCommand.equals("paste")) {
-            StyledDocument doc = d.getStyledDocument();
-            Position position = doc.getEndPosition();
             d.paste();
         } else if (actionCommand.equals("simple_replace")) {
         	String replace = JOptionPane.showInputDialog(null, "Replace or insert with:", "Input", JOptionPane.INFORMATION_MESSAGE);
